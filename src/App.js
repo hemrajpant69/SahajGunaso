@@ -21,7 +21,7 @@ if(mode==='white'){
   return (
     <>
 <Navbar title="SahajGunaso" mode={mode} toggleMode={toggleMode}/>
-<Form mode={mode} toggleMode={toggleMode}/>
+<Form mode={mode}/>
 <Footer/>
 
     </>
