@@ -1,14 +1,14 @@
+// ReportForm.jsx
 import React, { useState } from 'react';
 import WebcamCapture from './WebcamCapture';
 
 const ReportForm = (props) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [photo, setPhoto] = useState(null);
+  const [photos, setPhotos] = useState([]);
   const [error, setError] = useState('');
   const [fullNameError, setFullNameError] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [photoError, setPhotoError] = useState('');
   const [location, setLocation] = useState(null);
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
 
@@ -43,17 +43,13 @@ const ReportForm = (props) => {
   };
 
   const handlePhotoCapture = (image) => {
-    setPhoto(image);
+    setPhotos((prevPhotos) => [...prevPhotos, image]);
     setIsWebcamOpen(false);
-    setPhotoError('');
     setError('');
   };
 
-  const handleRecapture = () => {
-    setIsWebcamOpen(true);
-    setPhoto(null);
-    setPhotoError('');
-    setError('');
+  const removePhoto = (index) => {
+    setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
 
   const isValidEmail = (email) => {
@@ -74,9 +70,8 @@ const ReportForm = (props) => {
       return;
     }
 
-    if (photo === null) {
-      setPhotoError('Please capture a photo of the issue.');
-      setError('Please fill in all required fields.');
+    if (photos.length === 0) {
+      setError('Please capture at least one photo.');
       return;
     }
 
@@ -87,7 +82,7 @@ const ReportForm = (props) => {
 
     // All checks passed, you can now submit the form
     setError('');
-    console.log("Form Submitted Successfully");
+    console.log("Form Submitted Successfully", { fullName, email, photos });
     // Handle form submission (e.g., send data to the server)
   };
 
@@ -142,16 +137,9 @@ const ReportForm = (props) => {
         />
         {fullNameError && <div className="invalid-feedback">{fullNameError}</div>}
       </div>
+
       <div className="my-3">
-        <label
-          htmlFor="photoInput"
-          className="form-label"
-          style={{
-            backgroundColor: props.mode === 'dark' ? 'black' : 'white',
-            color: props.mode === 'dark' ? 'white' : 'black',
-          }}
-        >
-          Photo Capture
+        <label htmlFor="photoInput" className="form-label">
         </label>
         {!isWebcamOpen ? (
           <>
@@ -162,30 +150,29 @@ const ReportForm = (props) => {
             >
               Open Webcam
             </button>
-            {photo && (
-              <>
-                <img
-                  src={photo}
-                  alt=""
-                  style={{
-                    maxWidth: '100%',
-                    marginTop: '10px',
-                  }}
-                />
-                <button
-                  type="button"
-                  className="btn btn-danger mx-2"
-                  onClick={handleRecapture}
-                >
-                  Recapture
-                </button>
-              </>
+            {photos.length > 0 && (
+              <div>
+                <p style={{color: props.mode === 'dark' ? 'white' : 'black'}}>Captured Photos:</p>
+                <div className="d-flex flex-wrap">
+                  {photos.map((photo, index) => (
+                    <div key={index} className="m-2">
+                      <img
+                        src={photo}
+                        alt={`Captured Pics ${index + 1}`}
+                        style={{ maxWidth: '100%', height: 'auto' }}
+                      />
+                      <button type="button" onClick={() => removePhoto(index)}>
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </>
         ) : (
           <WebcamCapture onCapture={handlePhotoCapture} />
         )}
-        {photoError && <div className="invalid-feedback">{photoError}</div>}
       </div>
 
       <button
