@@ -11,6 +11,8 @@ const ReportForm = (props) => {
   const [emailError, setEmailError] = useState('');
   const [location, setLocation] = useState(null);
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
+  const [description, setDescription]=useState('');
+  const [descriptionError, setDescriptionError]=useState('');
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -33,6 +35,11 @@ const ReportForm = (props) => {
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
     setFullNameError('');
+    setError('');
+  };
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    setDescriptionError('');
     setError('');
   };
 
@@ -63,6 +70,11 @@ const ReportForm = (props) => {
       setError('Please fill in all required fields.');
       return;
     }
+      if (description.trim() === '') {
+        setDescriptionError('Description is required.');
+        setError('Please fill in all required fields.');
+        return;
+      }
 
     if (!isValidEmail(email)) {
       setEmailError('Please enter a valid email address.');
@@ -82,7 +94,7 @@ const ReportForm = (props) => {
 
     // All checks passed, you can now submit the form
     setError('');
-    console.log("Form Submitted Successfully", { fullName, email, photos });
+    console.log("Form Submitted Successfully", { fullName, email,description, photos });
     // Handle form submission (e.g., send data to the server)
   };
 
@@ -137,6 +149,37 @@ const ReportForm = (props) => {
         />
         {fullNameError && <div className="invalid-feedback">{fullNameError}</div>}
       </div>
+
+
+
+
+      <div className="my-3">
+        <label
+          htmlFor="descriptionInput"
+          className="form-label"
+          style={{
+            backgroundColor: props.mode === 'dark' ? 'black' : 'white',
+            color: props.mode === 'dark' ? 'white' : 'black',
+          }}
+        >
+          Problem Of Statement and Objectives:
+        </label>
+        <input
+          type="text"
+          className={`form-control ${descriptionError ? 'is-invalid' : ''}`}
+          id="descriptionInput"
+          onChange={handleDescriptionChange}
+          required
+          style={{
+            backgroundColor: props.mode === 'dark' ? 'black' : 'white',
+            color: props.mode === 'dark' ? 'white' : 'black',
+          }}
+        />
+        {descriptionError && <div className="invalid-feedback">{descriptionError}</div>}
+      </div>
+
+
+
 
       <div className="my-3">
         <label htmlFor="photoInput" className="form-label">
