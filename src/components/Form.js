@@ -94,6 +94,7 @@ const ReportForm = (props) => {
 
     // All checks passed, you can now submit the form
     setError('');
+    props.showAlert("Form Submitted Successfully","success")
     console.log("Form Submitted Successfully", { fullName, email,description, photos });
     // Handle form submission (e.g., send data to the server)
   };
