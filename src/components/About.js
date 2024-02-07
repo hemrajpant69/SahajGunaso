@@ -1,5 +1,4 @@
 import React from 'react';
-
 function About(props) {
   const textColorClass = props.mode === 'dark' ? 'text-white' : 'text-dark';
 
@@ -10,22 +9,21 @@ function About(props) {
           <div className="col-lg-6">
             <h2 className="text-primary">About Us</h2>
             <p className={`lead ${textColorClass}`}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              sit amet libero magna. Nulla lacinia magna a dignissim luctus.
-              Nulla facilisi. Proin at lacus nunc. Cras nec turpis id sem
-              dapibus vestibulum. Mauris maximus, ligula ac consectetur
-              malesuada, felis sem sodales libero, in tincidunt felis nulla
-              id arcu. Aliquam erat volutpat. Cras at nisi eget ipsum
-              imperdiet laoreet. Nullam elementum turpis vitae congue
-              vestibulum. Sed tempus velit vitae augue fermentum, nec
-              molestie nisl gravida. Sed mattis, felis id cursus luctus,
-              lacus elit vestibulum nunc, sit amet gravida velit tortor non
-              lectus.
+            Founded in 2010, Bedkot Municipality has been a cornerstone of community development in the Kanchanpur district.
+             With a rich history spanning centuries, our municipality has evolved into a vibrant center for cultural exchange and economic growth.
+              Nestled amidst the lush greenery of the Himalayan foothills, Bedkot offers a serene and picturesque setting for residents and visitors alike.
+
+Our municipality is home to a diverse population, encompassing various ethnicities, languages, and traditions. We take pride in our cultural heritage, 
+celebrating festivals and customs that reflect the unique identity of our community. At Bedkot Municipality, inclusivity and unity are at the forefront of our initiatives, 
+fostering a sense of belonging among all residents.
+
+As we look towards the future, our municipality remains committed to sustainable development and progress. Through innovative projects and partnerships,
+ we aim to enhance the quality of life for our residents while preserving the natural beauty of our surroundings. Join us on this journey as we continue to build a brighter and more prosperous future for Bedkot and its residents.
             </p>
           </div>
           <div className="col-lg-6">
             <img
-              src="https://via.placeholder.com/500"
+              src="hemraj.jpg"
               alt="About Us"
               className="img-fluid rounded-circle"
             />
