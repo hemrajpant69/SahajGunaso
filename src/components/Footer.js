@@ -98,5 +98,6 @@ const Footer = ({ mode }) => {
     </>
   );
 };
+//hii
 
 export default Footer;
