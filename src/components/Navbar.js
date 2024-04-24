@@ -34,10 +34,18 @@ export default function Navbar(props) {
           </Link>
         </li>
         <li className="nav-item">
+          <Link  className="btn btn-primary my-3 mx-3" to="/News">
+            News
+          </Link>
+        </li>
+
+        <li className="nav-item">
           <Link  className="btn btn-primary my-3 mx-3" to="/About">
             About
           </Link>
         </li>
+
+
         <li className="nav-item">
           <Link  className="btn btn-primary my-3 mx-3" to="/Form">
             Report
