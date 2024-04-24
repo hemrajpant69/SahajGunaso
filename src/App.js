@@ -4,21 +4,13 @@ import Footer from './components/Footer';
 import Form from './components/Form';
 import Navbar from './components/Navbar';
 import Alert from './components/Alert';
-import News from './components/News';
-import NewsItem from './components/NewsItem';
+import News from './components/News'; 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from './components/About';
 
 function App() {
   const [mode, setMode] = useState('white');
   const [alert, setAlert] = useState(null);
-  const [title, setTitle] = useState('SahajGunaso News');
-  const [description, setDescription] = useState('SahajGunaso');
-  const [imgurl, setimgurl] = useState("https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1099495_800x450.jpg");
-  const [newsurl, setnewsurl] = useState("http://www.espncricinfo.com/story/_/id/29103103/pcb-hands-umar-akmal-three-year-ban-all-cricket");
-
-
-
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
@@ -45,7 +37,7 @@ function App() {
       <Routes>
         <Route exact path="/Form" element={<Form mode={mode} showAlert={showAlert} />} />
         <Route exact path="/About" element={<About mode={mode} />} />
-        <Route exact path="/News" element={<News mode={mode} title={title} description={description} imgurl={imgurl} newsurl={newsurl}/>} /> 
+        <Route exact path="/News" element={<News mode={mode} />} /> 
       </Routes>
       <Footer mode={mode} />
     </BrowserRouter>
