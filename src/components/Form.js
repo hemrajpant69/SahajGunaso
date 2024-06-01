@@ -1,4 +1,5 @@
 // ReportForm.jsx
+import  axios from 'axios';
 import React, { useState } from 'react';
 import WebcamCapture from './WebcamCapture';
 
@@ -9,10 +10,20 @@ const ReportForm = (props) => {
   const [error, setError] = useState('');
   const [fullNameError, setFullNameError] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({});
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
   const [description, setDescription]=useState('');
   const [descriptionError, setDescriptionError]=useState('');
+//need for demo
+const[image,setImage]= useState({})
+//   const [formData, setFormData] = useState({
+//     emailId: '',
+//     name: '',
+//     problemStatement: '',
+  
+//     latitude: '',
+//     longitude: ''
+// });
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -82,10 +93,10 @@ const ReportForm = (props) => {
       return;
     }
 
-    if (photos.length === 0) {
-      setError('Please capture at least one photo.');
-      return;
-    }
+    // if (photos.length === 0) {
+    //   setError('Please capture at least one photo.');
+    //   return;
+    // }
 
     if (!location) {
       setError('Please fill in all required fields, including location.');
@@ -95,7 +106,48 @@ const ReportForm = (props) => {
     // All checks passed, you can now submit the form
     setError('');
     props.showAlert("Form Submitted Successfully","success")
-    console.log("Form Submitted Successfully", { fullName, email,description, photos });
+    // console.log("Form Submitted Successfully", { fullName, email,description, photos,location });
+   const a= location.latitude;
+const b= location.longitude;
+    const formData = new FormData();
+    const blog = {
+      
+      "emailId":email,
+      "name":fullName,
+     "problemStatement":description,
+     "latitude":a,
+      "longitude":b
+      
+      
+    };
+    formData.append('blog', new Blob([JSON.stringify(blog)], { type: 'application/json' }));
+    formData.append('photoFile', photos);
+    console.log(formData)
+
+    axios.post('http://localhost:8080/api/blogs/create', formData,{
+      headers: {
+        "Content-Type": `multipart/form-data`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+     },
+     body:formData,
+  })
+    .then(response => {
+        console.log('Blog created successfully:', response.data);
+        // Reset form after successful submission
+        setFullName('');
+        setEmail('');
+        setDescription('');
+        setPhotos([]);
+        setLocation({});
+        setFullNameError('');
+        setEmailError('');
+        setDescriptionError('');
+    })
+    .catch(error => {
+        console.error('There was an error creating the blog!', error);
+    });
     // Handle form submission (e.g., send data to the server)
   };
 
@@ -214,11 +266,20 @@ const ReportForm = (props) => {
               </div>
             )}
           </>
-        ) : (
-          <WebcamCapture onCapture={handlePhotoCapture} />
+        ) : ( console.log("hey")
+          // <WebcamCapture onCapture={handlePhotoCapture} />
         )}
       </div>
 
+
+      <input
+  type="file"
+  accept="image/*"
+  onChange={(e)=>{
+    console.log(e.target.files[0])
+    setPhotos(e.target.files[0])}}
+  multiple  // Add this attribute if you want to allow multiple file selection
+/>
       <button
         type="button"
         className="btn btn-secondary mx-2"

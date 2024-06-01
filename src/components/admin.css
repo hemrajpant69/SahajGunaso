@@ -1,0 +1,37 @@
+/* home.css */
+.container {
+    margin-top: 20px;
+  }
+  
+  .blog-entry {
+    transition: transform 0.2s;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .blog-entry:hover {
+    transform: translateY(-5px);
+  }
+  
+  .blog-entry img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .blog-entry .message {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .me-2 {
+    margin-right: 0.5rem;
+    
+  }
+  
+  .modal-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  

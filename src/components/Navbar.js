@@ -6,8 +6,12 @@ import {
     // Routes,remove comment when you needed.
   Link,
 } from "react-router-dom";
+import { AuthContext, useAuth } from './AuthContext';
 
 export default function Navbar(props) {
+
+  const AuthContext= useAuth();
+  console.log(AuthContext.isAuthenticated)
   return (
     <>
 <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
@@ -40,7 +44,7 @@ export default function Navbar(props) {
         </li>
 
         <li className="nav-item">
-          <Link  className="btn btn-primary my-3 mx-3" to="/About">
+         <Link  className="btn btn-primary my-3 mx-3" to="/About">
             About
           </Link>
         </li>
@@ -52,9 +56,23 @@ export default function Navbar(props) {
           </Link>
         </li>
         <li className="nav-item">
-          <Link  className="btn btn-primary my-3 mx-3" to="/Login">
+          <Link  className="btn btn-primary my-3 mx-3" to="/login">
             Login
           </Link>
+        </li>
+
+        <li className="nav-item">
+        {AuthContext.isAuthenticated && <Link  className="btn btn-primary my-3 mx-3" to="/admin">
+            Admin
+          </Link>
+}
+        </li>
+        
+        <li className="nav-item">
+        {AuthContext.isAuthenticated && <Link  className="btn btn-primary my-3 mx-3" to="/Home" onClick={()=>AuthContext.logout()}>
+            Logout
+          </Link>
+}
         </li>
       </ul>
       <form className="d-flex" role="search">
